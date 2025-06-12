@@ -51,6 +51,8 @@ class Engine:
 
         # прирастает масса
         self.mass_bank += self.mass_income * self.dt
+        self.mass_current   = 0.0
+        self.energy_current = 0.0
 
         # такт задачи
         if self.current:
@@ -58,6 +60,7 @@ class Engine:
             task_need_mass   = self.current.mass_per_second() * total_bp
             task_need_energy = self.current.energy_per_second() * total_bp
             total_need_mass  = task_need_mass + self.mass_cons_add
+
             if total_need_mass == 0:
                 k = 1.0
             else:
@@ -65,10 +68,8 @@ class Engine:
                 k = int(k * 100) / 100
 
             self.mass_bank     -= total_need_mass * k * self.dt
-            self.mass_current   = self.mass_income - total_need_mass * k * self.dt
-            self.energy_current = - (task_need_energy * k * self.dt)
-            # print(self.mass_bank, self.mass_current, self.energy_current)
-
+            self.mass_current   = (self.mass_income - (total_need_mass * k)) * self.dt
+            self.energy_current = -(task_need_energy * k * self.dt)
             self.current.advance(self.dt, k, total_bp)
 
             if self.current.done:
@@ -77,4 +78,5 @@ class Engine:
                 self.current = None
 
         self.time += self.dt
+        print(self.time, self.mass_bank, self.mass_current, self.energy_current)
         self.rec.snap(self.time, self.mass_bank, self.mass_current, self.energy_current)
