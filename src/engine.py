@@ -51,7 +51,7 @@ class Engine:
 
         # прирастает масса
         self.mass_bank += self.mass_income * self.dt
-        self.mass_current   = 0.0
+        self.mass_current   = self.mass_income
         self.energy_current = 0.0
 
         # такт задачи
