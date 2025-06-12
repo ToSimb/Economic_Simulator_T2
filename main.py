@@ -1,16 +1,17 @@
 from src.engine import Engine, SimConfig
 from src.bo_factory import bo_mex_upgrade_together_storage, bo_mex_upgrade_then_storage
+from src.bo_graphs import plot_comparison
 
 #______________________________
 # НАСТРОЙКА
 START_MASS_INCOME = 9.0
-START_MASS_BANK = 750
+START_MASS_BANK = 500
 ENGINEERS = 4
-COUNT_MEX = 6
-DELAY_TIME = 5
-END_TIME = 1000
+COUNT_MEX = 4
+DELAY_TIME = 5          # Время передвижения инженеров
+END_TIME = 900          # Время провдеение симуляции
 
-MASS_CONS_ADD = 8.0
+MASS_CONS_ADD = 5.0     # Дополнительная трата массы (с коэффициентом k)
 #______________________________
 
 cfg = SimConfig(
@@ -34,7 +35,7 @@ for _ in range(END_TIME):
 print(sim_1.fmt("start"), " - ", sim_1.time)
 print(sim_1.mass_bank)
 
-sim_1.rec.save()
+# sim_1.rec.save()
 print("_____________________")
 # ___________________________________
 # с последовательной обстройкой мексов
@@ -54,7 +55,9 @@ for _ in range(END_TIME):
 print(sim_2.fmt("start"), " - ", sim_2.time)
 print(sim_2.mass_bank)
 
-sim_2.rec.save()
+# sim_2.rec.save()
 print("_____________________")
 print("Итоги")
 print(f"Обстройка: {round(sim_1.mass_bank, 2)}, Последовательно: {round(sim_2.mass_bank, 2)}")
+
+plot_comparison(sim_1.rec, sim_2.rec)

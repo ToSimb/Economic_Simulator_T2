@@ -1,5 +1,6 @@
 from .tasks import Task_upgrade_mex, Task_build_storage, Task_wait
 
+# Обстройка
 def bo_mex_upgrade_together_storage(loops, delay_time):
     queue = []
     for i in range(loops):
@@ -10,6 +11,7 @@ def bo_mex_upgrade_together_storage(loops, delay_time):
             queue.append(Task_wait(f"Wait {delay_time}s", delay_time))
     return queue
 
+# Последовательно
 def bo_mex_upgrade_then_storage(loops, delay_time):
     queue = []
     for i in range(loops):

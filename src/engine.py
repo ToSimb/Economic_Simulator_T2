@@ -78,5 +78,4 @@ class Engine:
                 self.current = None
 
         self.time += self.dt
-        print(self.time, self.mass_bank, self.mass_current, self.energy_current)
         self.rec.snap(self.time, self.mass_bank, self.mass_current, self.energy_current)
